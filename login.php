@@ -10,7 +10,8 @@
 		
 		if (isset($_POST['login'])) {
 			$id = $_POST['username'];
-			$password = $_POST['password'];
+			$plain = $_POST['password'];
+			$password = hash('sha256', $plain);
 			
 			$stmt = $conn->prepare("SELECT * FROM employee WHERE emp_id = ?");
 			$stmt->bind_param("s", $id);
@@ -55,11 +56,20 @@
   <head>
     <meta charset="utf-8">
     <title>GrocerEase Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+	<style>
+	img {
+  		display: block;
+		border-radius: 50%;
+  		margin-left: auto;
+  		margin-right: auto;
+	}
+</style>
   </head>
   <body>
     <div class="center">
-      <h1>GrocerEase Login</h1>
+                <img src="pictures/logowall.png" alt="GrocerEase" style="width: 150px; height: auto;">
+      <h1>Login</h1>
       <form method="post" action="login.php">
         <div class="txt_field">
           <input type="text" name="username">
