@@ -65,7 +65,7 @@ elseif ($content == 'assignment') {
     $result = $conn->query($sql);
 }
 elseif ($content == 'promotion') {
-    $sql = "SELECT * FROM promotion";
+    $sql = "CALL GetPromotionProductInfo()";
     $result = $conn->query($sql);
 }
 elseif ($content == 'changepass') {
@@ -307,7 +307,7 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <div class="employee-item">
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($row['prod_pic']); ?>" class="emp_list_pic" />
-                        <span class="employee-name"><strong>Name:</strong> <?php echo htmlspecialchars($row['prod_name']); ?></span>
+                        <span class="employee-gender"><strong>Name:</strong> <?php echo htmlspecialchars($row['prod_name']); ?></span>
                         <span class="employee-id"><strong>ID:</strong> <?php echo htmlspecialchars($row['prod_id']); ?></span>
                         <span class="employee-gender"><strong>Price:</strong> <?php echo htmlspecialchars($row['prod_price']); ?></span>
                         <span class="employee-gender"><strong>Quantity:</strong> <?php echo htmlspecialchars($row['prod_quantity']); ?></span>
@@ -398,13 +398,13 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                     <h2>Location List</h2>
                     <?php while ($row = $result->fetch_assoc()) : ?>
                         <div class="employee-item">
-                            <span class="employee-name"><strong>Location:</strong> <?php echo htmlspecialchars($row['loca_id']); ?></span>
+                            <span class="employee-gender"><strong>Location:</strong> <?php echo htmlspecialchars($row['loca_id']); ?></span>
                             <span class="employee-id"><strong>Employee ID:</strong> <?php echo htmlspecialchars($row['LocationEmpID']); ?></span>
-                            <span class="employee-name"><strong>Name:</strong> <?php echo htmlspecialchars($row['emp_fname'] . ' ' . $row['emp_lname']); ?></span>
-                            <span class="employee-id"><strong>Birth Date:</strong> <?php echo htmlspecialchars($row['emp_dob']); ?></span>
+                            <span class="employee-gender"><strong>Name:</strong> <?php echo htmlspecialchars($row['emp_fname'] . ' ' . $row['emp_lname']); ?></span>
+                            <span class="employee-gender"><strong>Birth Date:</strong> <?php echo htmlspecialchars($row['emp_dob']); ?></span>
                             <span class="employee-pic">
                                 <?php if (!empty($row['emp_pic'])) : ?>
-                                    <img src="data:image/jpeg;base64,<?php echo base64_encode($row['emp_pic']); ?>" alt="Employee Picture" style="width: 100px; height: 100px;">
+                                    <img src="data:image/jpeg;base64,<?php echo base64_encode($row['emp_pic']); ?>" alt="Employee Picture" class="emp_list_pic">
                                 <?php else : ?>
                                     <p>No Picture Available</p>
                                 <?php endif; ?>
@@ -458,12 +458,19 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                 <h2>Promotion List</h2>
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <div class="employee-item">
-                        <span class="employee-name"><strong>Promotion Name:</strong> <?php echo htmlspecialchars($row['promo_name']); ?></span>
-                        <span class="employee-id"><strong>Promotion ID:</strong> <?php echo htmlspecialchars($row['promo_id']); ?></span>
+                        <span class="employee-gender"><strong><?php echo htmlspecialchars($row['promo_name']); ?></strong> </span>
                         <span class="employee-gender"><strong>Start:</strong> <?php echo htmlspecialchars($row['promo_start']); ?></span>
                         <span class="employee-gender"><strong>End:</strong> <?php echo htmlspecialchars($row['promo_end']); ?></span>
                         <span class="employee-gender"><strong>Discount:</strong> <?php echo htmlspecialchars($row['promo_discount']); ?>%</span>
-                        <span class="employee-gender"><strong>Product ID:</strong> <?php echo htmlspecialchars($row['prod_id']); ?></span>
+                        <span class="employee-gender"><?php echo htmlspecialchars($row['prod_name']); ?></span>
+                        <span class="employee-pic">
+                                <?php if (!empty($row['prod_pic'])) : ?>
+                                    <img src="data:image/jpeg;base64,<?php echo base64_encode($row['prod_pic']); ?>" alt="Employee Picture" class="emp_list_pic">
+                                <?php else : ?>
+                                    <p>No Picture Available</p>
+                                <?php endif; ?>
+                            
+                                </span>
                         <span class="employee-actions">
                         <a href="adminmain.php?content=editpromo&edit_promo_id=<?php echo $row['promo_id']; ?>">Edit</a>
                         </span>

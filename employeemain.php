@@ -37,7 +37,7 @@ elseif ($content == 'product') {
     $result = $conn->query($sql);
 }
 elseif ($content == 'assignment') {
-    $sql = "SELECT * FROM location";
+    $sql = "CALL GetLocationsWithEmployees()"; // Call the stored procedure
     $result = $conn->query($sql);
 }
 elseif ($content == 'changepass') {
@@ -168,11 +168,21 @@ $activeMornbtn = ($content == 'morebtn') ? 'active' : '';
                 <div class="product-list">
                 <h2>Assigned Location List</h2>
                 <?php while ($row = $result->fetch_assoc()) : ?>
-                    <div class="product-item" >
-                        <span class="product-id"><strong>Zone: </strong> <?php echo htmlspecialchars($row['loca_id']); ?></span>
-                        <span class="product-name"><strong>Response Employee ID :</strong> <?php echo htmlspecialchars($row['emp_id']); ?></span>
-                    </div>
-                <?php endwhile; ?>
+                        <div class="product-item">
+                            <span class="product-id"><strong>Location:</strong> <?php echo htmlspecialchars($row['loca_id']); ?></span>
+                            <span class="product-id"><strong>Employee ID:</strong> <?php echo htmlspecialchars($row['LocationEmpID']); ?></span>
+                            <span class="product-id"><strong>Name:</strong> <?php echo htmlspecialchars($row['emp_fname'] . ' ' . $row['emp_lname']); ?></span>
+                            <span class="product-id"><strong>Birth Date:</strong> <?php echo htmlspecialchars($row['emp_dob']); ?></span>
+                            <span class="employee-pic">
+                                <?php if (!empty($row['emp_pic'])) : ?>
+                                    <img src="data:image/jpeg;base64,<?php echo base64_encode($row['emp_pic']); ?>" alt="Employee Picture" style="width: 100px; height: 100px;">
+                                <?php else : ?>
+                                    <p>No Picture Available</p>
+                                <?php endif; ?>
+                            
+                                </span>
+                        </div>
+                    <?php endwhile; ?>
                 </div>
 
 
