@@ -204,7 +204,7 @@ $activeMornbtn = ($content == 'morebtn') ? 'active' : '';
                         <form action="update_employee.php" method="post">
                         <input type="hidden" id="id_prod" name ="id_prod" value=<?php echo htmlspecialchars($_SESSION['more_prodinfo']); ?>>
                         <label for="prod_quantity"> Edit Quantity : </label>
-                        <input type="number" id="prod_quantity" name="prod_quantity" min="0">
+                        <input type="number" id="prod_quantity" name="prod_quantity" min="0" required>
                         <button type="submit" name="update_type" value="edit_quantity">Confirm</button>
                     </form>
                     </div>

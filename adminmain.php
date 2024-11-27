@@ -275,11 +275,11 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                             </div>
                             <div class="form-group">
                             <label for="pprice">Price</label>
-                            <input type="number" id="pprice" name="pprice" step="0.01"required>
+                            <input type="number" id="pprice" name="pprice" min = "-1" step="0.01"required>
                             </div>
                             <div class="form-group">
                             <label for="pquantity">Quantity</label>
-                            <input type="number" id="pquantity" name="pquantity" step="1"required>
+                            <input type="number" id="pquantity" name="pquantity" min = "0" step="1"required>
                             </div>
                         </div>
 
@@ -338,27 +338,27 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
 
                     <div class="form-group">
                     <label for="pname">Product Name:</label>
-                    <input type="text" id="pname" name="pname" value="<?php echo isset($result['prod_name']) ? htmlspecialchars($result['prod_name']) : ''; ?>" >
+                    <input type="text" id="pname" name="pname" value="<?php echo isset($result['prod_name']) ? htmlspecialchars($result['prod_name']) : ''; ?>" required>
                     </div>
 
                     <div class="form-group">
                     <label for="pprice">Product Price:</label>
-                    <input type="number" id="pprice" name="pprice" step="0.01" value="<?php echo isset($result['prod_price']) ? htmlspecialchars($result['prod_price']) : ''; ?>" >
+                    <input type="number" id="pprice" name="pprice" step="0.01" min = "-1"value="<?php echo isset($result['prod_price']) ? htmlspecialchars($result['prod_price']) : ''; ?>" required>
                     </div>
 
                     <div class="form-group">
                     <label for="pquantity">Product Quantity:</label>
-                    <input type="number" id="pquantity" name="pquantity" step="1" value="<?php echo isset($result['prod_quantity']) ? htmlspecialchars($result['prod_quantity']) : ''; ?>" >
+                    <input type="number" id="pquantity" name="pquantity" step="1" min = "0" value="<?php echo isset($result['prod_quantity']) ? htmlspecialchars($result['prod_quantity']) : ''; ?>" required>
                     </div>
 
                     <div class="form-group">
                     <label for="pinformation">Product Information:</label>
-                    <input type="text" id="pinformation" name="pinformation" value="<?php echo isset($result['prod_info']) ? htmlspecialchars($result['prod_info']) : ''; ?>" >
+                    <input type="text" id="pinformation" name="pinformation" value="<?php echo isset($result['prod_info']) ? htmlspecialchars($result['prod_info']) : ''; ?>" required>
                     </div>
 
                     <div class="form-group">
                     <label for="plocation">Product Location ID:</label>
-                    <input type="text" id="plocation" name="plocation" value="<?php echo isset($result['prod_loca']) ? htmlspecialchars($result['prod_loca']) : ''; ?>" >
+                    <input type="text" id="plocation" name="plocation" value="<?php echo isset($result['prod_loca']) ? htmlspecialchars($result['prod_loca']) : ''; ?>" required>
                     </div>
 
                     <div class="form-group">
@@ -441,11 +441,11 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                         <div class="form-row">
                             <div class="form-group">
                             <label for="discount">Discount %</label>
-                            <input type="number" id="discount" name="discount" required>
+                            <input type="number" id="discount" name="discount" min = "0" step = "1" required>
                             </div>
                             <div class="form-group">
                             <label for="prod_id">Product ID</label>
-                            <input type="number" id="prod_id" name="prod_id" required>
+                            <input type="number" id="prod_id" name="prod_id" min = "0" step = "1" required>
                             </div>
 
                         </div>
@@ -513,17 +513,17 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
 
                     <div class="form-group">
                     <label for="emp_fname">First Name:</label>
-                    <input type="text" id="emp_fname" name="emp_fname" value="">
+                    <input type="text" id="emp_fname" name="emp_fname" value="" required>
                     </div>
 
                     <div class="form-group">
                     <label for="emp_lname">Last Name:</label>
-                    <input type="text" id="emp_lname" name="emp_lname" value="">
+                    <input type="text" id="emp_lname" name="emp_lname" value="" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="emp_gender">Gender:</label>
-                        <select id="emp_gender" name="emp_gender">
+                        <select id="emp_gender" name="emp_gender" required>
                             <option value="" disabled selected>Select gender</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -533,7 +533,7 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                     
                     <div class="form-group">
                     <label for="emp_dob">Date of Birth:</label>
-                        <input type="date" id="emp_dob" name="emp_dob" value="">
+                        <input type="date" id="emp_dob" name="emp_dob" value="" required>
                         <div class="form-group">
                             <label>Picture</label>
                             <input type="file" id="epic" name="epic">
@@ -559,17 +559,17 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
 
                     <div class="form-group">
                     <label for="emp_fname">First Name:</label>
-                    <input type="text" id="emp_fname" name="emp_fname" value="">
+                    <input type="text" id="emp_fname" name="emp_fname" value="" required>
                     </div>
 
                     <div class="form-group">
                     <label for="emp_lname">Last Name:</label>
-                    <input type="text" id="emp_lname" name="emp_lname" value="">
+                    <input type="text" id="emp_lname" name="emp_lname" value="" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="emp_gender">Gender:</label>
-                        <select id="emp_gender" name="emp_gender">
+                        <select id="emp_gender" name="emp_gender" required>
                             <option value="" disabled selected>Select gender</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -579,7 +579,7 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
                     
                     <div class="form-group">
                     <label for="emp_dob">Date of Birth:</label>
-                        <input type="date" id="emp_dob" name="emp_dob" value="">
+                        <input type="date" id="emp_dob" name="emp_dob" value="" required>
                         <div class="form-group">
                             <label>Picture</label>
                             <input type="file" id="epic" name="epic">
@@ -605,26 +605,26 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
 
                     <div class="form-group">
                     <label for="pname">Promotion Name:</label>
-                    <input type="text" id="pname" name="pname" value="">
+                    <input type="text" id="pname" name="pname" value="" required>
                     </div>
 
                     <div class="form-group">
                     <label for="starter">Start Date:</label>
-                    <input type="date" id="starter" name="starter" value="">
+                    <input type="date" id="starter" name="starter" value="" required> 
                     </div>
                     <div class="form-group">
                     <label for="ender">End Date:</label>
-                    <input type="date" id="ender" name="ender" value="">
+                    <input type="date" id="ender" name="ender" value="" required>
                     </div>
                     
                     <div class="form-group">
                     <label for="discounter">Discount Percentage:</label>
-                        <input type="number" id="discounter" name="discounter" value="">
+                        <input type="number" id="discounter" name="discounter" value="" min = "0" required>
                     </div>
 
                     <div class="form-group">
                     <label for="prod_ids">Product ID:</label>
-                        <input type="number" id="prod_ids" name="prod_ids" value="">
+                        <input type="number" id="prod_ids" name="prod_ids" value="" min = "0" required>
                     </div>
         
                     <div class="form-action">
