@@ -60,6 +60,7 @@ elseif ($content == 'morebtn') {
             $prod_info= $row['prod_info'];
             $prod_quantity = $row['prod_quantity'];
             $prod_pic = $row['prod_pic'];
+            $prod_loca = $row['prod_loca'];
     }
 }
 
@@ -156,6 +157,7 @@ $activeMornbtn = ($content == 'morebtn') ? 'active' : '';
                         <span class="product-name"><strong>Name :</strong> <?php echo htmlspecialchars($row['prod_name']); ?></span>
                         <span class="product-price"><strong>Price :</strong> <?php echo htmlspecialchars($row['prod_price']); ?></span>
                         <span class="product-quantity"><strong>Quantity :</strong> <?php echo htmlspecialchars($row['prod_quantity']); ?></span>
+                        <span class="product-quantity"><strong>Location: Zone</strong> <?php echo htmlspecialchars($row['prod_loca']); ?></span>
                         <span class="product-actions">
                         <a href="employeemain.php?content=morebtn&more_prodinfo=<?php echo $row['prod_id']; ?>">More</a>
                         </span>
@@ -195,6 +197,7 @@ $activeMornbtn = ($content == 'morebtn') ? 'active' : '';
                         <p><strong>Price :</strong> <?php echo htmlspecialchars($prod_price); ?></p>
                         <p><strong>Quantity :</strong> <?php echo htmlspecialchars($prod_quantity); ?></p>
                         <p><strong>Product Info :</strong> <?php echo htmlspecialchars($prod_info); ?></p>
+                        <p><strong>Product Location :</strong> <?php echo htmlspecialchars($prod_loca); ?></p>
 
                     <div class="quantity-action">
                         <!-- Edit quantity form -->
