@@ -8,32 +8,32 @@
         header("Location: login.php");
         exit();
     }
-    // Determine which content to show
+    
 $content = isset($_GET['content']) ? $_GET['content'] : 'profile'; 
 
 if (isset($_GET['edit_emp_id'])) {
-    $_SESSION['edit_emp_id'] = $_GET['edit_emp_id']; // Store the employee ID in session
-    header("Location: adminmain.php?content=editemp"); // Reload the page to show edit mode
+    $_SESSION['edit_emp_id'] = $_GET['edit_emp_id'];
+    header("Location: adminmain.php?content=editemp");
     exit();
 }
 if (isset($_GET['edit_prod_id'])) {
-    $_SESSION['edit_prod_id'] = $_GET['edit_prod_id']; // Store the employee ID in session
-    header("Location: adminmain.php?content=editprod"); // Reload the page to show edit mode
+    $_SESSION['edit_prod_id'] = $_GET['edit_prod_id']; 
+    header("Location: adminmain.php?content=editprod");
     exit();
 }
 if (isset($_GET['edit_loca_id'])) {
-    $_SESSION['edit_loca_id'] = $_GET['edit_loca_id']; // Store the employee ID in session
-    header("Location: adminmain.php?content=editloca"); // Reload the page to show edit mode
+    $_SESSION['edit_loca_id'] = $_GET['edit_loca_id']; 
+    header("Location: adminmain.php?content=editloca"); 
     exit();
 }
 if (isset($_GET['edit_promo_id'])) {
-    $_SESSION['edit_promo_id'] = $_GET['edit_promo_id']; // Store the employee ID in session
-    header("Location: adminmain.php?content=editpromo"); // Reload the page to show edit mode
+    $_SESSION['edit_promo_id'] = $_GET['edit_promo_id']; 
+    header("Location: adminmain.php?content=editpromo"); 
     exit();
 }
 if (isset($_GET['edit_admin_id'])) {
-    $_SESSION['edit_admin_id'] = $_GET['edit_admin_id']; // Store the employee ID in session
-    header("Location: adminmain.php?content=editadmin"); // Reload the page to show edit mode
+    $_SESSION['edit_admin_id'] = $_GET['edit_admin_id']; 
+    header("Location: adminmain.php?content=editadmin");
     exit();
 }
     
@@ -61,7 +61,7 @@ elseif ($content == 'product') {
     $result = $conn->query($sql);
 }
 elseif ($content == 'assignment') {
-    $sql = "CALL GetLocationsWithEmployees()"; // Call the stored procedure
+    $sql = "CALL GetLocationsWithEmployees()"; 
     $result = $conn->query($sql);
 }
 elseif ($content == 'promotion') {
@@ -549,7 +549,7 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
             <?php elseif ($content == 'editadmin') : ?>
                 <form action="update_employee.php" method="post" enctype="multipart/form-data">
                     <?php if (isset($_SESSION['edit_admin_id'])): ?>
-                        <!-- You can pass the emp_id in a hidden input -->
+
                         <h2>Edit Admin</h2>
                         <input type="hidden" name="edit_emp_id" value="<?php echo htmlspecialchars($_SESSION['edit_admin_id']); ?>">
                         <p>Employee ID: <?php echo htmlspecialchars($_SESSION['edit_admin_id']); ?></p>
@@ -595,7 +595,7 @@ $activeChangepass = ($content == 'changepass') ? 'active' : '';
             <?php elseif ($content == 'editpromo') : ?>
                 <form action="update_employee.php" method="post">
                     <?php if (isset($_SESSION['edit_promo_id'])): ?>
-                        <!-- You can pass the emp_id in a hidden input -->
+                       
                         <h2>Edit Promotion</h2>
                         <input type="hidden" name="edit_promo_id" value="<?php echo htmlspecialchars($_SESSION['edit_promo_id']); ?>">
                         <p>Promotion ID: <?php echo htmlspecialchars($_SESSION['edit_promo_id']); ?></p>

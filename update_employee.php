@@ -163,7 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         case 'employee_delete':
                 try {
-                    // Check if employee ID is set in the session
                     if (!isset($_SESSION['edit_emp_id'])) {
                         echo "<script>alert('No employee selected for editing!');</script>";
                         header("Location: adminmain.php?content=employee");
@@ -172,14 +171,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
                     $emp_id = $_SESSION['edit_emp_id'];
             
-                    // Check if employee ID is empty
                     if (empty($emp_id)) {
                         echo "<script>alert('Invalid employee ID!');</script>";
                         header("Location: adminmain.php?content=employee");
                         exit();
                     }
             
-                    // Prepare the SQL DELETE query
                     $sql = "DELETE FROM employee WHERE emp_id = ?;";
                     $stmt = $conn->prepare($sql);
             
@@ -187,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         throw new Exception("Failed to prepare SQL statement: " . $conn->error);
                     }
             
-                    // Bind the parameter and execute the query
                     $stmt->bind_param("s", $emp_id);
             
                     if ($stmt->execute()) {
@@ -198,7 +194,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         throw new Exception("Failed to execute SQL statement: " . $stmt->error);
                     }
                 } catch (Exception $e) {
-                    // Handle any errors by redirecting to an error page or showing an alert
                     unset($_SESSION['edit_emp_id']);
                     echo "<script>
                             alert('Something went wrong, Please check wether this employee was assigned to location or not: {$e->getMessage()}');
@@ -208,7 +203,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
         case 'admin_delete':
                     try {
-                        // Check if employee ID is set in the session
                         if (!isset($_SESSION['edit_admin_id'])) {
                             echo "<script>alert('No employee selected for editing!');</script>";
                             header("Location: adminmain.php?content=employee");
@@ -216,15 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                 
                         $emp_id = $_SESSION['edit_admin_id'];
-                
-                        // Check if employee ID is empty
                         if (empty($emp_id)) {
                             echo "<script>alert('Invalid employee ID!');</script>";
                             header("Location: adminmain.php?content=employee");
                             exit();
                         }
-                
-                        // Prepare the SQL DELETE query
+
                         $sql = "DELETE FROM admin WHERE admin_id = ?;";
                         $stmt = $conn->prepare($sql);
                 
@@ -232,7 +223,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             throw new Exception("Failed to prepare SQL statement: " . $conn->error);
                         }
                 
-                        // Bind the parameter and execute the query
                         $stmt->bind_param("s", $emp_id);
                 
                         if ($stmt->execute()) {
@@ -243,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             throw new Exception("Failed to execute SQL statement: " . $stmt->error);
                         }
                     } catch (Exception $e) {
-                        // Handle any errors by redirecting to an error page or showing an alert
+
                         unset($_SESSION['edit_admin_id']);
                         echo "<script>
                                 alert('Something went wrong, Please check wether this employee was assigned to location or not: {$e->getMessage()}');
@@ -253,9 +243,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
         case 'product_add':
                     if (isset($_FILES['ppic']['tmp_name']) && $_FILES['ppic']['error'] == 0) {
-                        $pic = file_get_contents($_FILES['ppic']['tmp_name']); // Get the binary data
+                        $pic = file_get_contents($_FILES['ppic']['tmp_name']); 
                     } else {
-                        $pic = null; // Handle the case where no picture is uploaded
+                        $pic = null; 
                     }
         
                     $sql = "SELECT prod_id FROM product ORDER BY prod_id";
@@ -263,17 +253,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     $existing_ids = [];
                     while ($row = $result->fetch_assoc()) {
-                        // Extract numerical part of the ID (assuming the format is 'A' followed by a number)
-                        $existing_ids[] = (int) $row['prod_id'];  // Remove the 'A' and convert to integer
+                        
+                        $existing_ids[] = (int) $row['prod_id']; 
                     }
 
-                    // Find the first missing gap in the ID sequence
-                    $new_id_number = 1;  // Start from 1
+                    $new_id_number = 1; 
                     while (in_array($new_id_number, $existing_ids)) {
-                        $new_id_number++;  // Increment until we find a gap
+                        $new_id_number++;  
                     }
         
-                    // Generate the new admin ID (e.g., "A1", "A2", etc.)
                     $id = $new_id_number;
                     $name = $_POST['pname'];
                     $price = $_POST['pprice'];
@@ -286,7 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt = $conn->prepare($sql);
                     $stmt -> bind_param("issbdis",$id,$name,$info,$pic,$price,$quantity,$location);
                     if ($pic) {
-                        $stmt->send_long_data(3, $pic); // Index 5 corresponds to the emp_pic column
+                        $stmt->send_long_data(3, $pic); 
                     }
                     $stmt->execute();
                     header("Location: adminmain.php?content=product");
@@ -316,7 +304,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $info = $_POST['pinformation'];
                         $location = $_POST['plocation'];
         
-                    // Prepare the update query
                     $sql = "UPDATE product SET prod_name = ?, prod_info = ?, prod_pic = ?, prod_price = ?, prod_quantity = ?, prod_loca = ? WHERE prod_id = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt -> bind_param("ssbdisi",$name,$info,$ppic,$price,$quantity,$location,$id_prod);
@@ -324,15 +311,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt->send_long_data(2, $ppic); 
                     }
                     $stmt->execute();
-        
-                    // Redirect back to the employee list
                     unset($_SESSION['edit_emp_id']);
                     header("Location: adminmain.php?content=product");
                     exit();
 
         case 'product_delete':
                     try {
-                        // Check if employee ID is set in the session
                         if (!isset($_SESSION['edit_prod_id'])) {
                             echo "<script>alert('No product selected for deleting!');</script>";
                             header("Location: adminmain.php?content=product");
@@ -341,14 +325,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                         $id_prod = $_SESSION['edit_prod_id'];
                 
-                        // Check if employee ID is empty
                         if (empty($id_prod)) {
                             echo "<script>alert('Invalid product ID!');</script>";
                             header("Location: adminmain.php?content=product");
                             exit();
                         }
 
-                        // Prepare the SQL DELETE query
                         $sql = "DELETE FROM product WHERE prod_id = ?;";
                         $stmt = $conn->prepare($sql);
                 
@@ -356,7 +338,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             throw new Exception("Failed to prepare SQL statement: " . $conn->error);
                         }
                 
-                        // Bind the parameter and execute the query
                         $stmt->bind_param("i", $id_prod);
                 
                         if ($stmt->execute()) {
@@ -367,7 +348,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             throw new Exception("Failed to execute SQL statement: " . $stmt->error);
                         }
                     } catch (Exception $e) {
-                        // Handle any errors by redirecting to an error page or showing an alert
                         unset($_SESSION['edit_prod_id']);
                         echo "<script>
                                 alert('Something went wrong, Please check wether this product was assigned to location or not: {$e->getMessage()}');
@@ -383,13 +363,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "test";
                     echo "Zone = ".$zone;
                     echo "work = ".$work;
-                    // Prepare the update query
                     $sql = "UPDATE location SET emp_id = ? WHERE loca_id = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt -> bind_param("ss",$work,$zone);
                     $stmt->execute();
                     echo "Executed";
-                    // Redirect back to the employee list
                     header("Location: adminmain.php?content=assignment");
                     exit();
             case 'promotion_add':
@@ -402,13 +380,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $existing_ids[] = (int) $row['promo_id'];
                         }
             
-                        // Find the first missing gap in the ID sequence
-                        $new_id_number = 1;  // Start from 1
+                        $new_id_number = 1;  
                         while (in_array($new_id_number, $existing_ids)) {
-                            $new_id_number++;  // Increment until we find a gap
+                            $new_id_number++;
                         }
-            
-                        // Generate the new admin ID (e.g., "A1", "A2", etc.)
+        
                         $id = $new_id_number;
                         $name = $_POST['promo_name'];
                         $start = $_POST['start_date'];
@@ -444,19 +420,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $discount = $_POST['discounter'];
                             $prod_id = $_POST['prod_ids'];
             
-                        // Prepare the update query
                         $sql = "UPDATE promotion SET promo_name = ?, promo_start = ?, promo_end = ?, promo_discount = ?, prod_id = ? WHERE promo_id = ?";
                         $stmt = $conn->prepare($sql);
                         $stmt -> bind_param("sssiii",$name,$start,$end,$discount,$prod_id,$id_promo);
                         $stmt->execute();
-            
-                        // Redirect back to the employee list
+        
                         unset($_SESSION['edit_promo_id']);
                         header("Location: adminmain.php?content=promotion");
                         exit();
             case 'promotion_delete':
                         try {
-                            // Check if employee ID is set in the session
                             if (!isset($_SESSION['edit_promo_id'])) {
                                 echo "<script>alert('No product selected for deleting!');</script>";
                                 header("Location: adminmain.php?content=promotion");
@@ -465,14 +438,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                             $id_promo = $_SESSION['edit_promo_id'];
                     
-                            // Check if employee ID is empty
                             if (empty($id_promo)) {
                                 echo "<script>alert('Invalid product ID!');</script>";
                                 header("Location: adminmain.php?content=promotion");
                                 exit();
                             }
             
-                            // Prepare the SQL DELETE query
                             $sql = "DELETE FROM promotion WHERE promo_id = ?;";
                             $stmt = $conn->prepare($sql);
                     
@@ -480,7 +451,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 throw new Exception("Failed to prepare SQL statement: " . $conn->error);
                             }
                     
-                            // Bind the parameter and execute the query
                             $stmt->bind_param("i", $id_promo);
                     
                             if ($stmt->execute()) {
@@ -491,7 +461,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 throw new Exception("Failed to execute SQL statement: " . $stmt->error);
                             }
                         } catch (Exception $e) {
-                            // Handle any errors by redirecting to an error page or showing an alert
                             unset($_SESSION['edit_promo_id']);
                             echo "<script>
                                     alert('Something went wrong, Please check wether this product was assigned to location or not: {$e->getMessage()}');
