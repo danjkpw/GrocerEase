@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $pic = null; // Handle the case where no picture is uploaded
                 }
-            
-            $emp_id = $_SESSION['edit_emp_id'];
+                $emp_id = $_POST['edit_emp_id'];
+            //$emp_id = $_SESSION['edit_emp_id'];
             $emp_fname = $_POST['emp_fname'];
             $emp_lname = $_POST['emp_lname'];
             $emp_gender = $_POST['emp_gender'];
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           </script>";
                     exit();
                 }
-            case 'admin_delete':
+        case 'admin_delete':
                     try {
                         // Check if employee ID is set in the session
                         if (!isset($_SESSION['edit_admin_id'])) {
@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               </script>";
                         exit();
                     }
-                case 'product_add':
+        case 'product_add':
                     if (isset($_FILES['ppic']['tmp_name']) && $_FILES['ppic']['error'] == 0) {
                         $pic = file_get_contents($_FILES['ppic']['tmp_name']); // Get the binary data
                     } else {
@@ -293,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
 
 
-                case 'product_edit':
+        case 'product_edit':
                     if (!isset($_SESSION['edit_prod_id'])) {
                         echo "<script>alert('No product selected for editing!');</script>";
                         header("Location: adminmain.php?content=employee");
@@ -330,7 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: adminmain.php?content=product");
                     exit();
 
-                case 'product_delete':
+        case 'product_delete':
                     try {
                         // Check if employee ID is set in the session
                         if (!isset($_SESSION['edit_prod_id'])) {
@@ -375,7 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               </script>";
                         exit();
                     }
-                case 'loca_assign':
+        case 'loca_assign':
                     
                     $zone = $_POST['loca_id'];
                     $work = $_POST['emp_id'];
@@ -499,37 +499,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                   </script>";
                             exit();
                         }
-        case 'password_edit':
-            //echo"Password edit case<br>";
-            $xxxx = $_POST['xxxx'];
-            $xxxxx = $_POST['xxxxx'];
-            if($xxxx !== $xxxxx){
-                //echo"password does not match";
-                exit();
-            }
-            $xxxxx = "";
-            $hashed = hash('sha256', $xxxx);
-            //echo $hashed;
-            $xxxx = '';
-            if (!isset($_SESSION['admin_id'])) {
-                echo "<script>alert('No product selected for editing!');</script>";
-                header("Location: adminmain.php?content=changepass");
-                exit();
-            }
-            $id = $_SESSION['admin_id'];
-                if (empty($id)) {
-                    echo "<script>alert('Invalid promotion ID!');</script>";
+            case 'password_edit':
+                //echo"Password edit case<br>";
+                $xxxx = $_POST['xxxx'];
+                $xxxxx = $_POST['xxxxx'];
+                if($xxxx !== $xxxxx){
+                    //echo"password does not match";
+                    exit();
+                }
+                $xxxxx = "";
+                $hashed = hash('sha256', $xxxx);
+                //echo $hashed;
+                $xxxx = '';
+                if (!isset($_SESSION['admin_id'])) {
+                    echo "<script>alert('No product selected for editing!');</script>";
                     header("Location: adminmain.php?content=changepass");
                     exit();
                 }
-            //echo $id;
-            $sql = "UPDATE admin SET admin_password = ? WHERE admin_id = ?";
-                        $stmt = $conn->prepare($sql);
-                        $stmt -> bind_param("ss",$hashed,$id);
-                        $stmt->execute();
+                $id = $_SESSION['admin_id'];
+                    if (empty($id)) {
+                        echo "<script>alert('Invalid promotion ID!');</script>";
+                        header("Location: adminmain.php?content=changepass");
+                        exit();
+                    }
+                //echo $id;
+                $sql = "UPDATE admin SET admin_password = ? WHERE admin_id = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt -> bind_param("ss",$hashed,$id);
+                            $stmt->execute();
 
-            header("Location: adminmain.php?content=changepass");
-            exit();
+                header("Location: adminmain.php?content=changepass");
+                exit();
 
         case 'edit_quantity':
                 if (!isset($_SESSION['more_prodinfo'])) {
