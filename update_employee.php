@@ -3,7 +3,6 @@ session_start();
 include 'connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Determine the action or type of update
     $updateType = isset($_POST['update_type']) ? $_POST['update_type'] : '';
 
     switch ($updateType) {
@@ -20,18 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
                 if (isset($_FILES['epic']['tmp_name']) && $_FILES['epic']['error'] == 0) {
-                    $pic = file_get_contents($_FILES['epic']['tmp_name']); // Get the binary data
+                    $pic = file_get_contents($_FILES['epic']['tmp_name']);
                 } else {
-                    $pic = null; // Handle the case where no picture is uploaded
+                    $pic = null; 
                 }
                 $emp_id = $_POST['edit_emp_id'];
-            //$emp_id = $_SESSION['edit_emp_id'];
-            $emp_fname = $_POST['emp_fname'];
-            $emp_lname = $_POST['emp_lname'];
-            $emp_gender = $_POST['emp_gender'];
-            $emp_dob = $_POST['emp_dob'];
+                $emp_fname = $_POST['emp_fname'];
+                $emp_lname = $_POST['emp_lname'];
+                $emp_gender = $_POST['emp_gender'];
+                $emp_dob = $_POST['emp_dob'];
 
-            // Prepare the update query
             $sql = "UPDATE employee SET emp_fname = ?, emp_lname = ?, emp_gender = ?, emp_pic = ?, emp_dob = ? WHERE emp_id = ?";
             $stmt = $conn->prepare($sql);
             $stmt -> bind_param("sssbss",$emp_fname,$emp_lname,$emp_gender,$pic,$emp_dob,$emp_id);
@@ -40,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt->execute();
 
-            // Redirect back to the employee list
             unset($_SESSION['edit_emp_id']);
             header("Location: adminmain.php?content=employee");
             exit();
@@ -57,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit();
                     }
                     if (isset($_FILES['epic']['tmp_name']) && $_FILES['epic']['error'] == 0) {
-                        $pic = file_get_contents($_FILES['epic']['tmp_name']); // Get the binary data
+                        $pic = file_get_contents($_FILES['epic']['tmp_name']);
                     } else {
-                        $pic = null; // Handle the case where no picture is uploaded
+                        $pic = null;
                     }
                 
                 $emp_id = $_SESSION['edit_admin_id'];
@@ -68,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $emp_gender = $_POST['emp_gender'];
                 $emp_dob = $_POST['emp_dob'];
     
-                // Prepare the update query
                 $sql = "UPDATE admin SET admin_fname = ?, admin_lname = ?, admin_gender = ?, admin_pic = ?, admin_dob = ? WHERE admin_id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt -> bind_param("sssbss",$emp_fname,$emp_lname,$emp_gender,$pic,$emp_dob,$emp_id);
@@ -77,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $stmt->execute();
     
-                // Redirect back to the employee list
                 unset($_SESSION['edit_admin_id']);
                 header("Location: adminmain.php?content=employee");
                 exit();
@@ -86,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 'employee_add':
 
             if (isset($_FILES['pic']['tmp_name']) && $_FILES['pic']['error'] == 0) {
-                $pic = file_get_contents($_FILES['pic']['tmp_name']); // Get the binary data
+                $pic = file_get_contents($_FILES['pic']['tmp_name']); 
             } else {
-                $pic = null; // Handle the case where no picture is uploaded
+                $pic = null; 
             }
 
             $sql = "SELECT emp_id FROM employee ORDER BY emp_id";
@@ -96,17 +90,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $existing_ids = [];
             while ($row = $result->fetch_assoc()) {
-                // Extract numerical part of the ID (assuming the format is 'A' followed by a number)
-                $existing_ids[] = (int) substr($row['emp_id'], 1);  // Remove the 'A' and convert to integer
+                
+                $existing_ids[] = (int) substr($row['emp_id'], 1); 
             }
 
-            // Find the first missing gap in the ID sequence
-            $new_id_number = 1;  // Start from 1
+            $new_id_number = 1; 
             while (in_array($new_id_number, $existing_ids)) {
-                $new_id_number++;  // Increment until we find a gap
+                $new_id_number++; 
             }
 
-            // Generate the new admin ID (e.g., "A1", "A2", etc.)
             $password = hash('sha256', 'password1234');
             $id = 'E' . $new_id_number;
             $fname = $_POST['fname'];
@@ -119,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare($sql);
             $stmt -> bind_param("sssssbs",$id,$password,$fname,$lname,$gender,$pic,$dob);
             if ($pic) {
-                $stmt->send_long_data(5, $pic); // Index 5 corresponds to the emp_pic column
+                $stmt->send_long_data(5, $pic);
             }
             $stmt->execute();
             //echo "statement executed";
@@ -130,9 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         case 'admin_add':
             if (isset($_FILES['pic']['tmp_name']) && $_FILES['pic']['error'] == 0) {
-                $pic = file_get_contents($_FILES['pic']['tmp_name']); // Get the binary data
+                $pic = file_get_contents($_FILES['pic']['tmp_name']); 
             } else {
-                $pic = null; // Handle the case where no picture is uploaded
+                $pic = null; 
             }
 
             $sql = "SELECT COUNT(*) AS total_admin FROM admin";
@@ -152,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare($sql);
             $stmt -> bind_param("sssssbs",$id,$password,$fname,$lname,$gender,$pic,$dob);
             if ($pic) {
-                $stmt->send_long_data(5, $pic); // Index 5 corresponds to the emp_pic column
+                $stmt->send_long_data(5, $pic); 
             }
             $stmt->execute();
             //echo "statement executed";
