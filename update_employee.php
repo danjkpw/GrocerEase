@@ -114,10 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->send_long_data(5, $pic);
             }
             $stmt->execute();
-            //echo "statement executed";
-            //echo "Employee added successful";
-            //echo "$fname";
-            //echo "<img src='data:image/jpeg;base64," . base64_encode($pic) . "' alt='Uploaded Image' />";
             header("Location: adminmain.php?content=employee");
             exit();
         case 'admin_add':
