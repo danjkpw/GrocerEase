@@ -8,9 +8,9 @@
 $content = isset($_GET['content']) ? $_GET['content'] : 'product'; 
 
 if (isset($_GET['more_prodinfo'])) {
-    $_SESSION['more_prodinfo'] = $_GET['more_prodinfo']; // Store the employee ID in session
-    echo "Session ID set: " . $_SESSION['more_prodinfo']; // Debugging line
-    header("Location: customermain.php?content=more"); // Reload the page to show edit mode
+    $_SESSION['more_prodinfo'] = $_GET['more_prodinfo']; 
+    echo "Session ID set: " . $_SESSION['more_prodinfo'];
+    header("Location: customermain.php?content=more"); 
     exit();
 }
 

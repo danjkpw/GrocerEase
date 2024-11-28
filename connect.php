@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";  // Adjust as needed
-$username = "root";         // MAMP default username
-$password = "root";         // MAMP default password
-$dbname = "grocerease"; // Replace with your database name
+$servername = "localhost";  
+$username = "root";         
+$password = "root";         
+$dbname = "grocerease"; 
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

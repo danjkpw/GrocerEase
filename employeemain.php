@@ -12,9 +12,9 @@
 $content = isset($_GET['content']) ? $_GET['content'] : 'profile'; 
 
 if (isset($_GET['more_prodinfo'])) {
-    $_SESSION['more_prodinfo'] = $_GET['more_prodinfo']; // Store the employee ID in session
-    echo "Session ID set: " . $_SESSION['more_prodinfo']; // Debugging line
-    header("Location: employeemain.php?content=morebtn"); // Reload the page to show edit mode
+    $_SESSION['more_prodinfo'] = $_GET['more_prodinfo']; 
+    echo "Session ID set: " . $_SESSION['more_prodinfo'];
+    header("Location: employeemain.php?content=morebtn");
     exit();
 }
 
